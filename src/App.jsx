@@ -39,7 +39,7 @@ const formatPrice = (value) =>
     maximumFractionDigits: 0,
   }).format(value)
 
-const whatsappPhone = '79000000000'
+const telegramUser = 'BorM2'
 
 function App() {
   const [deviceId, setDeviceId] = useState(devices[0].id)
@@ -73,7 +73,7 @@ function App() {
     )
   }
 
-  const whatsappMessage = useMemo(() => {
+  const consultationText = useMemo(() => {
     const extrasText = estimate.extras.length
       ? estimate.extras.map((item) => item.label).join(', ')
       : 'без дополнительных услуг'
@@ -89,9 +89,7 @@ function App() {
     ].join('\n')
   }, [estimate])
 
-  const whatsappUrl = `https://wa.me/${whatsappPhone}?text=${encodeURIComponent(
-    whatsappMessage,
-  )}`
+  const telegramUrl = `https://t.me/${telegramUser}`
 
   return (
     <main className="app-shell">
@@ -218,9 +216,10 @@ function App() {
             </div>
           </dl>
 
-          <a className="cta" href={whatsappUrl} rel="noreferrer" target="_blank">
-            Написать в WhatsApp
+          <a className="cta" href={telegramUrl} rel="noreferrer" target="_blank">
+            Написать в Telegram
           </a>
+          <p className="contact-copy">{consultationText}</p>
           <p className="note">
             Итоговая цена зависит от модели, наличия запчастей и состояния
             устройства после диагностики.

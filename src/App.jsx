@@ -39,6 +39,8 @@ const formatPrice = (value) =>
     maximumFractionDigits: 0,
   }).format(value)
 
+const telegramUser = 'BorM2'
+
 function App() {
   const [deviceId, setDeviceId] = useState(devices[0].id)
   const [brandId, setBrandId] = useState(brands[2].id)
@@ -70,6 +72,24 @@ function App() {
         : [...current, extraId],
     )
   }
+
+  const consultationText = useMemo(() => {
+    const extrasText = estimate.extras.length
+      ? estimate.extras.map((item) => item.label).join(', ')
+      : 'без дополнительных услуг'
+
+    return [
+      'Здравствуйте! Хочу уточнить стоимость ремонта.',
+      `Устройство: ${estimate.device.label}`,
+      `Бренд: ${estimate.brand.label}`,
+      `Работа: ${estimate.repair.label}`,
+      `Дополнительно: ${extrasText}`,
+      `Срок: ${estimate.days} день`,
+      `Предварительная цена: ${formatPrice(estimate.total)}`,
+    ].join('\n')
+  }, [estimate])
+
+  const telegramUrl = `https://t.me/${telegramUser}`
 
   return (
     <main className="app-shell">
@@ -196,9 +216,10 @@ function App() {
             </div>
           </dl>
 
-          <button className="cta" type="button">
-            Получить консультацию
-          </button>
+          <a className="cta" href={telegramUrl} rel="noreferrer" target="_blank">
+            Написать в Telegram
+          </a>
+          <p className="contact-copy">{consultationText}</p>
           <p className="note">
             Итоговая цена зависит от модели, наличия запчастей и состояния
             устройства после диагностики.

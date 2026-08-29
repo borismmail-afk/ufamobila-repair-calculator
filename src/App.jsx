@@ -32,6 +32,27 @@ const extraServices = [
   { id: 'courier', label: 'Курьер по Уфе', price: 500 },
 ]
 
+const popularServices = [
+  {
+    id: 'popular-screen',
+    title: 'Замена дисплея',
+    text: 'Подбор модуля, установка и проверка сенсора.',
+    repairId: 'screen',
+  },
+  {
+    id: 'popular-battery',
+    title: 'Замена аккумулятора',
+    text: 'Помогает, если телефон быстро разряжается или выключается.',
+    repairId: 'battery',
+  },
+  {
+    id: 'popular-water',
+    title: 'Чистка после влаги',
+    text: 'Диагностика, чистка платы и оценка дальнейшего ремонта.',
+    repairId: 'cleaning',
+  },
+]
+
 const formatPrice = (value) =>
   new Intl.NumberFormat('ru-RU', {
     style: 'currency',
@@ -112,6 +133,30 @@ function App() {
             <span>Уфа</span>
             <strong>Ремонт телефонов, планшетов и ноутбуков</strong>
           </div>
+        </div>
+      </section>
+
+      <section className="popular-services" aria-label="Популярные услуги">
+        <div className="section-heading">
+          <p className="eyebrow">Частые обращения</p>
+          <h2>Популярные услуги</h2>
+        </div>
+        <div className="service-list">
+          {popularServices.map((service) => (
+            <button
+              className={
+                service.repairId === repairId
+                  ? 'service-card active'
+                  : 'service-card'
+              }
+              key={service.id}
+              onClick={() => setRepairId(service.repairId)}
+              type="button"
+            >
+              <strong>{service.title}</strong>
+              <span>{service.text}</span>
+            </button>
+          ))}
         </div>
       </section>
 
